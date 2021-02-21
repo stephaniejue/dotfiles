@@ -24,6 +24,7 @@ Plugin 'vim-ruby/vim-ruby'
 Plugin 'godlygeek/tabular'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'chrisbra/csv.vim'
+Plugin 'iamcco/markdown-preview.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -123,6 +124,8 @@ nmap <Leader>a: :Tab /:\zs/l0l1<CR>
 vmap <Leader>a: :Tab /:\zs/l0l1<CR>
 nmap <Leader>a{ :Tab /)\s*\zs{/<CR>
 vmap <Leader>a{ :Tab /)\s*\zs{/<CR>
+nmap <Leader>a> :Tab /=>/l1l1<CR>
+vmap <Leader>a> :Tab /=>/l1l1<CR>
 
 " insert pry
 map <Leader>p irequire 'pry'; binding.pry<ESC>

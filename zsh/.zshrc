@@ -119,6 +119,9 @@ alias q-apps-mod='/Users/stephchin/Code/q-centrix/q-apps-models'
 alias q-apps-sup='/Users/stephchin/Code/q-centrix/q-apps-support'
 alias core='/Users/stephchin/Code/q-centrix/core-api'
 alias mirth='/Users/stephchin/Code/q-centrix/ansible-mirth'
+alias reporting='/Users/stephchin/Code/q-centrix/reporting-data-mart'
+alias analytics='/Users/stephchin/Code/q-centrix/analytics-api'
+alias onc='/Users/stephchin/Code/q-centrix/oncology'
 source ~/.bash_profile
 alias rake='noglob rake'
 # git aliases
@@ -184,36 +187,13 @@ alias seed-gwtg='../data_seed_scripts/gwtg.sh'
 alias seed-gts='../data_seed_scripts/gts.sh'
 alias seed-gts241='../data_seed_scripts/gts241.sh'
 alias seed-afib='../data_seed_scripts/afib.sh'
-alias review_next='ruby ../pick_int_reviewer.rb'
-
-# outputs the csvs with the eid
-function regq() {
-  GREEN=$'\e[0;32m'
-  WHITE=$'\e[0m'
-  EID="${1},"
-  IMPDIR="/Users/stephchin/Code/q-centrix/registries-implementations"
-  echo "------------------"
-  echo "${GREEN}Question:${WHITE}"
-  grep -rh --include=\*questions.csv $EID $IMPDIR
-  echo "------------------"
-  echo "${GREEN}Enumerable(s):${WHITE}"
-  grep -rh --include=\*enumerables.csv $EID $IMPDIR
-  echo "------------------"
-  echo "${GREEN}Validation(s):${WHITE}"
-  grep -rh --include=\*validations.csv $EID $IMPDIR
-  echo "------------------"
-  echo "${GREEN}Form section:${WHITE}"
-  grep -B 2 -r --include=\*display-logic.json "\x22${1}\x22" $IMPDIR | head -1 | xargs
-  echo "------------------"
-  echo "${GREEN}Opens edge(s):${WHITE}"
-  grep -rh --include=\*edges.csv $EID $IMPDIR
-  echo "------------------"
-}
+alias seed-onc='../data_seed_scripts/onc.sh'
 
 # gem bumps
 alias vb='gch master; gpl; gbr -d version-bump; gch -b version-bump; gem bump -m -b'
 alias mvb='git checkout master; git reset --hard version-bump'
-alias rvb='git push; gem tag'
+alias pvb='git push; gem tag'
+alias cvb='npm version patch; gps origin master; gps --tags'
 
 alias pw='prettier --write'
 
@@ -231,6 +211,30 @@ alias scrum="open 'https://us02web.zoom.us/j/5394852076?pwd=bWF5VWdCQWNpUUJIZTUz
 
 # Zoom documentation
 alias systemd="open 'https://github.com/q-centrix/documentation/blob/master/devops/Management-with-systemd.md'"
+
+# outputs the csvs with the eid
+function data_for() {
+  GREEN=$'\e[0;32m'
+  WHITE=$'\e[0m'
+  EID="${1}"
+  IMPDIR="."
+  echo "------------------"
+  echo "${GREEN}Question:${WHITE}"
+  grep -rh --include=\*questions.csv "${EID}," $IMPDIR
+  echo "------------------"
+  echo "${GREEN}Enumerable(s):${WHITE}"
+  grep -rh --include=\*enumerables.csv "${EID}," $IMPDIR
+  echo "------------------"
+  echo "${GREEN}Group(s):${WHITE}"
+  grep -rh --include=\*question_groups.csv ",${EID}" $IMPDIR
+  echo "------------------"
+  echo "${GREEN}Validation(s):${WHITE}"
+  grep -rh --include=\*validations.csv "${EID}," $IMPDIR
+  echo "------------------"
+  echo "${GREEN}Opens edge(s):${WHITE}"
+  grep -rh --include=\*edges.csv "${EID}" $IMPDIR
+  echo "------------------"
+}
 
 # add timestamp to command line
 local ret_status="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
