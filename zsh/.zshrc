@@ -236,6 +236,10 @@ function data_for() {
   echo "------------------"
 }
 
+function dump() {
+  pg_dump -O -Fc $1 > "../dumps/${2}"
+}
+
 # add timestamp to command line
 local ret_status="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
 PROMPT='${ret_status} %{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)'
